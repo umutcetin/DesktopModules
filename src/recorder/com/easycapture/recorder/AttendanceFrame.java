@@ -33,7 +33,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class AttendanceFrame extends JFrame implements ActionListener {
-
+//deneme comment
 	JButton btnKaydet;
 	JComboBox cbSinif, cbDers;
 	JPanel panelust, panelogr, panelalt;
