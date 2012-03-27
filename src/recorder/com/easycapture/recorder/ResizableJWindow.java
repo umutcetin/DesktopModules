@@ -26,6 +26,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.TargetDataLine;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -128,14 +129,15 @@ public class ResizableJWindow extends JWindow implements ActionListener,
 		draw();// bounds a gore pencereler çizilir
 
 		// renklendirme
-		JPanel colorpanel = new JPanel();
-		colorpanel.setBackground(Color.RED);
+		//max pencere boyutu 3000x2000
+		ImagePanel colorpanel = new ImagePanel(new ImageIcon("b.jpg").getImage());
+		//colorpanel.setBackground(Color.RED);
 		JPanel cp2 = new JPanel();
-		cp2.setBackground(Color.RED);
-		JPanel cp3 = new JPanel();
-		cp3.setBackground(Color.RED);
-		JPanel cp4 = new JPanel();
-		cp4.setBackground(Color.RED);
+		cp2.setBackground(Color.LIGHT_GRAY);
+		ImagePanel cp3 = new ImagePanel(new ImageIcon("b.jpg").getImage());
+		//cp3.setBackground(Color.RED);
+		ImagePanel cp4 = new ImagePanel(new ImageIcon("b.jpg").getImage());
+		//cp4.setBackground(Color.RED);
 
 		// butonlar ve listener
 		btnCapture = new JButton("Yakala");
