@@ -31,6 +31,7 @@ public class Stopwatch extends JFrame implements ActionListener, Runnable {
 		} else {
 			//bu satýr burada olursa pause olduktan sonra tekrar calisinca 2 dk ya uzatýyor
 			//startTime = 2 * 60 * 1000 + System.currentTimeMillis();
+			startTime +=10000;
 			isRunning = true;
 			updater = new Thread(this);
 			updater.start();
@@ -60,7 +61,7 @@ public class Stopwatch extends JFrame implements ActionListener, Runnable {
 		startTime = 2 * 60 * 1000 + System.currentTimeMillis();//bu satýr burada olursa pause ediyor
 		startStopButton.addActionListener(this);
 		getContentPane().add(startStopButton);
-		setSize(100, 50);
+		setSize(500, 500);
 		setVisible(true);
 	}
 

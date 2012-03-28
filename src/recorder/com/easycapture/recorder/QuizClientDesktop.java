@@ -81,7 +81,7 @@ public class QuizClientDesktop extends JFrame implements ActionListener {
 		setTitle("Quiz : Öðrenci");
 
 		setLocation(200, 50);
-		setSize(500, 400);
+		setSize(800, 600);
 		
 		TimerThread();
 	}
@@ -102,6 +102,8 @@ public class QuizClientDesktop extends JFrame implements ActionListener {
 
 	public void startTimer() {
 		try {
+			long timeNow= System.currentTimeMillis();//load test için			
+			
 			long time= ((saat*60*60)+(dakika*60)+saniye);
 			//long time= ((saat*60+dakika)*60 +saniye)*1000;			
 			//system.current time millis kullanýrsak sistem saatiyle oynayarak cheat yapýlabilir
@@ -109,11 +111,16 @@ public class QuizClientDesktop extends JFrame implements ActionListener {
 				//dakika ve saat bulmak için iyi bir yöntem deðil
 				labelTime.setText("Kalan süre: "+ t / (60*60) +" saat "+ (t / 60) % 60 + " dakika "+ t%(60) +" saniye");
 				Thread.sleep(1000);
+				
+				//load test. passed.
+				System.out.println(System.currentTimeMillis()-timeNow);
+				timeNow= System.currentTimeMillis();
 			}
 			JOptionPane.showMessageDialog(this, "Süre doldu.");
 			this.setVisible(false);
 		} catch (Exception exc) {
 			JOptionPane.showMessageDialog(new JFrame(), exc);
+			//deneme comment 2
 		}
 	}
 
@@ -126,7 +133,7 @@ public class QuizClientDesktop extends JFrame implements ActionListener {
 	}
 
 	public static void main(String arg[]) {
-		QuizClientDesktop frame = new QuizClientDesktop(0,0,3,"soru.jpg");
+		QuizClientDesktop frame = new QuizClientDesktop(1,0,3,"u.jpg");
 		frame.setVisible(true);
 
 	}

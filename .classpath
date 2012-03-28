@@ -14,5 +14,6 @@
 	<classpathentry kind="lib" path="C:/Program Files (x86)/Xuggle/share/java/jars/slf4j-api.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files (x86)/Xuggle/share/java/jars/xuggle-xuggler.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files (x86)/Xuggle/share/java/jars/xuggle-xuggler-test.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Umut/DesktopModules/lib/imgscalr-lib-4.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
