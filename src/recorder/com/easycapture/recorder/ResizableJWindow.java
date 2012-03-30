@@ -38,7 +38,7 @@ import com.xuggle.mediatool.ToolFactory;
 import com.xuggle.xuggler.IRational;
 
 public class ResizableJWindow extends JWindow implements ActionListener,
-		MouseMotionListener {
+		MouseMotionListener, MouseListener {
 
 	// for mouse events
 	private String windowKonum;
@@ -129,15 +129,16 @@ public class ResizableJWindow extends JWindow implements ActionListener,
 		draw();// bounds a gore pencereler çizilir
 
 		// renklendirme
-		//max pencere boyutu 3000x2000
-		ImagePanel colorpanel = new ImagePanel(new ImageIcon("b.jpg").getImage());
-		//colorpanel.setBackground(Color.RED);
+		// max pencere boyutu 3000x2000
+		ImagePanel colorpanel = new ImagePanel(
+				new ImageIcon("b.jpg").getImage());
+		// colorpanel.setBackground(Color.RED);
 		JPanel cp2 = new JPanel();
 		cp2.setBackground(Color.LIGHT_GRAY);
 		ImagePanel cp3 = new ImagePanel(new ImageIcon("b.jpg").getImage());
-		//cp3.setBackground(Color.RED);
+		// cp3.setBackground(Color.RED);
 		ImagePanel cp4 = new ImagePanel(new ImageIcon("b.jpg").getImage());
-		//cp4.setBackground(Color.RED);
+		// cp4.setBackground(Color.RED);
 
 		// butonlar ve listener
 		btnCapture = new JButton("Yakala");
@@ -191,6 +192,9 @@ public class ResizableJWindow extends JWindow implements ActionListener,
 		cp3.addMouseMotionListener(this);
 		cp4.addMouseMotionListener(this);
 		cp2.addMouseMotionListener(this);
+
+		// alt pencere köþeler
+		cp2.addMouseListener(this);
 
 		// her zaman üstte
 		jwust.setAlwaysOnTop(true);
@@ -420,13 +424,21 @@ public class ResizableJWindow extends JWindow implements ActionListener,
 	}
 
 	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+		System.out.println("entered bottom jwindow");
+		if (arg0.getXOnScreen() < this.bounds.x + 15
+				&& arg0.getXOnScreen() > this.bounds.x - 15) {
+			this.setCursor(new Cursor(Cursor.SW_RESIZE_CURSOR));
+		} 
+		else if (arg0.getXOnScreen() < this.bounds.getMaxX() + 15
+				&& arg0.getXOnScreen() > this.bounds.getMaxX() - 15) {
+			this.setCursor(new Cursor(Cursor.SE_RESIZE_CURSOR));
+		}
 
 	}
 
 	public void mouseExited(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-
+		this.setCursor(new Cursor(Cursor.S_RESIZE_CURSOR));
 	}
 
 	public void mousePressed(MouseEvent arg0) {
@@ -464,9 +476,7 @@ public class ResizableJWindow extends JWindow implements ActionListener,
 			this.bounds.x += arg0.getX();// baþlangýç koordinatlarýný delta
 											// cursor kadar taþý
 			this.bounds.y += arg0.getY();
-		} 
-		else 
-		{// hangi kenarýn tutulduðunu bul. köþelerin tutulmasýný da bul
+		} else {// hangi kenarýn tutulduðunu bul. köþelerin tutulmasýný da bul
 				// (to do)
 			if (arg0.getXOnScreen() < this.bounds.getMaxX() + 25
 					&& arg0.getXOnScreen() > this.bounds.getMaxX() - 25
@@ -474,48 +484,41 @@ public class ResizableJWindow extends JWindow implements ActionListener,
 					&& arg0.getYOnScreen() > this.bounds.getMaxY() - 15) {
 				System.out.println("sag alt");
 				windowKonum = "sag alt";
-			}else
-			if (arg0.getXOnScreen() < this.bounds.getMaxX() + 15
+			} else if (arg0.getXOnScreen() < this.bounds.getMaxX() + 15
 					&& arg0.getXOnScreen() > this.bounds.getMaxX() - 15
 					&& arg0.getYOnScreen() < this.bounds.y + 15
 					&& arg0.getYOnScreen() > this.bounds.y - 15) {
 				System.out.println("sag ust");
 				windowKonum = "sag ust";
-			}else
-			if (arg0.getXOnScreen() < this.bounds.x + 15
+			} else if (arg0.getXOnScreen() < this.bounds.x + 15
 					&& arg0.getXOnScreen() > this.bounds.x - 15
 					&& arg0.getYOnScreen() < this.bounds.y + 15
 					&& arg0.getYOnScreen() > this.bounds.y - 15) {
 				System.out.println("sol ust");
 				windowKonum = "sol ust";
-			}else
-			if (arg0.getXOnScreen() < this.bounds.x + 15
+			} else if (arg0.getXOnScreen() < this.bounds.x + 15
 					&& arg0.getXOnScreen() > this.bounds.x - 15
 					&& arg0.getYOnScreen() < this.bounds.getMaxY() + 35
 					&& arg0.getYOnScreen() > this.bounds.getMaxY() - 15) {
 				System.out.println("sol alt");
 				windowKonum = "sol alt";
-			}else
-			if (arg0.getXOnScreen() < this.bounds.x + 15
+			} else if (arg0.getXOnScreen() < this.bounds.x + 15
 					&& arg0.getXOnScreen() > this.bounds.x - 15)// sol
 			{
 				System.out.println("sol");
 				windowKonum = "sol";
 
-			}else
-			if (arg0.getXOnScreen() < this.bounds.getMaxX() + 15
+			} else if (arg0.getXOnScreen() < this.bounds.getMaxX() + 15
 					&& arg0.getXOnScreen() > this.bounds.getMaxX() - 15) {
 				System.out.println("sag");
 				windowKonum = "sag";
 
-			}else
-			if (arg0.getYOnScreen() < this.bounds.getMaxY() + 35
+			} else if (arg0.getYOnScreen() < this.bounds.getMaxY() + 35
 					&& arg0.getYOnScreen() > this.bounds.getMaxY() - 15) {
 				System.out.println("alt");
 				windowKonum = "alt";
 
-			}else
-			if (arg0.getYOnScreen() < this.bounds.y + 15
+			} else if (arg0.getYOnScreen() < this.bounds.y + 15
 					&& arg0.getYOnScreen() > this.bounds.y - 15) {
 				System.out.println("ust");
 				windowKonum = "ust";
@@ -523,27 +526,27 @@ public class ResizableJWindow extends JWindow implements ActionListener,
 
 			// buna göre bounds adlý dikdörtgeni güncelle
 			if (windowKonum.equals("sag alt"))// sol
-			{	
+			{
 				System.out.println(this.bounds.width);
-				System.out.println(arg0.getX()+"  -  "+ arg0.getY());
-				this.bounds.width += arg0.getX()-this.bounds.width;
+				System.out.println(arg0.getX() + "  -  " + arg0.getY());
+				this.bounds.width += arg0.getX() - this.bounds.width;
 				this.bounds.height += arg0.getY();
 			}
 			if (windowKonum.equals("sag ust"))// sol
-			{							
+			{
 				this.bounds.width += arg0.getX();
 				this.bounds.y += arg0.getY();
 				this.bounds.height -= arg0.getY();
 			}
 			if (windowKonum.equals("sol ust"))// sol
-			{							
+			{
 				this.bounds.x += arg0.getX();
 				this.bounds.width -= arg0.getX();
 				this.bounds.y += arg0.getY();
 				this.bounds.height -= arg0.getY();
-			}			
+			}
 			if (windowKonum.equals("sol alt"))// sol
-			{					
+			{
 				this.bounds.x += arg0.getX();
 				this.bounds.width -= arg0.getX();
 				this.bounds.height += arg0.getY();
