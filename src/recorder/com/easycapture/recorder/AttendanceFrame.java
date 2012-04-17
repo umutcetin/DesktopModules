@@ -1,6 +1,7 @@
 package com.easycapture.recorder;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -19,6 +20,7 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Hashtable;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.ImageIcon;
@@ -38,27 +40,29 @@ public class AttendanceFrame extends JFrame implements ActionListener {
 	JComboBox cbSinif, cbDers;
 	JPanel panelust, panelogr, panelalt;
 	JLabel label1;
+	
+	Hashtable<String , JPanel> students= new Hashtable<String, JPanel>();
+	
+	String[] ogrList = { "MÜNÝRE GAMZE EKÝZER", "YASÝN SARTIK",
+			"YASÝN SARTIK", "HALÝME DALBOY", "HALÝME DALBOY",
+			"OGRENCI 5", "OGRENCI 6",
+			"OGRENCI 7", "OGRENCI 8",
+			"OGRENCI 9", "OGRENCI 10",
+			"OGRENCI 11", "OGRENCI 12",
+			"OGRENCI 13", "OGRENCI 14",
+			"OGRENCI 15", "OGRENCI 16",
+			"OGRENCI 17", "OGRENCI 18",
+			"OGRENCI 19" };
+	String[] noList = { "070401001", "070401004", "070401007", "070401001",
+			"070401001", "070401001", "1", "2",
+			"3", "4", "5", "6",
+			"7", "8", "9", "10",
+			"11", "12", "13", "14" };
 
 	AttendanceFrame(String sinif) {
 
 		label1 = new JLabel("Sýnýf: " + sinif);
-		label1.setFont(new Font("Tahoma", Font.BOLD, 20));
-
-		String[] ogrList = { "MÜNÝRE GAMZE EKÝZER", "YASÝN SARTIK",
-				"YASÝN SARTIK", "HALÝME DALBOY", "HALÝME DALBOY",
-				"MÜNÝRE GAMZE EKÝZER", "MÜNÝRE GAMZE EKÝZER",
-				"MÜNÝRE GAMZE EKÝZER", "MÜNÝRE GAMZE EKÝZER",
-				"MÜNÝRE GAMZE EKÝZER", "MÜNÝRE GAMZE EKÝZER",
-				"MÜNÝRE GAMZE EKÝZER", "MÜNÝRE GAMZE EKÝZER",
-				"MÜNÝRE GAMZE EKÝZER", "MÜNÝRE GAMZE EKÝZER",
-				"MÜNÝRE GAMZE EKÝZER", "MÜNÝRE GAMZE EKÝZER",
-				"MÜNÝRE GAMZE EKÝZER", "MÜNÝRE GAMZE EKÝZER",
-				"MÜNÝRE GAMZE EKÝZER" };
-		String[] noList = { "070401001", "070401004", "070401007", "070401001",
-				"070401001", "070401001", "070401001", "070401015",
-				"070401001", "070401001", "070401001", "070401065",
-				"070401001", "070401001", "070401001", "070401541",
-				"070401001", "070401001", "070433301", "070432001" };
+		label1.setFont(new Font("Tahoma", Font.BOLD, 20));		
 
 		btnKaydet = new JButton("Kaydet");
 
@@ -73,15 +77,17 @@ public class AttendanceFrame extends JFrame implements ActionListener {
 			JLabel num = new JLabel(noList[i]);
 			num.setIcon(new ImageIcon("child.jpg"));
 			JLabel name = new JLabel(ogrList[i]);
-			JCheckBox jc = new JCheckBox("Mevcut", true);
+	//		JCheckBox jc = new JCheckBox("Mevcut", true);
 //			JCheckBox jc2 = new JCheckBox("Yok", false);
 //			JCheckBox jc3 = new JCheckBox("Ýzinli", false);
 
 			paneltekogr.add(num);
 			paneltekogr.add(name);
-			paneltekogr.add(jc);
+//			paneltekogr.add(jc);
 //			paneltekogr.add(jc2);
 //			paneltekogr.add(jc3);
+			
+			students.put(noList[i], paneltekogr);
 
 			panelogr.add(paneltekogr);
 
@@ -97,6 +103,20 @@ public class AttendanceFrame extends JFrame implements ActionListener {
 
 		setTitle("Yoklama");
 
+		isHere("1");
+		isHere("5");
+		isHere("9");
+		isHere("10");
+		isHere("11");
+		isHere("12");
+		isHere("13");
+		isHere("14");
+		
+		isAbsent("2");
+		isAbsent("3");
+		isAbsent("6");
+		
+		
 		setLocation(200, 50);
 		setSize(800, 600);
 	}
@@ -106,6 +126,18 @@ public class AttendanceFrame extends JFrame implements ActionListener {
 			this.setVisible(false);
 		}
 
+	}
+	
+	public void isHere(String studentID)
+	{
+		JPanel stu= students.get(studentID);
+		stu.setBackground(Color.GREEN);
+	}
+	
+	public void isAbsent(String studentID)
+	{
+		JPanel stu= students.get(studentID);
+		stu.setBackground(Color.RED);
 	}
 
 	public static void main(String arg[]) {

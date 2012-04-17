@@ -193,7 +193,10 @@ public class ResizableJWindow extends JWindow implements ActionListener,
 		cp4.addMouseMotionListener(this);
 		cp2.addMouseMotionListener(this);
 
-		// alt pencere köþeler
+		// alt pencere köþeler		
+		colorpanel.addMouseListener(this);
+		cp3.addMouseListener(this);
+		cp4.addMouseListener(this);
 		cp2.addMouseListener(this);
 
 		// her zaman üstte
@@ -424,15 +427,37 @@ public class ResizableJWindow extends JWindow implements ActionListener,
 	}
 
 	public void mouseEntered(MouseEvent arg0) {
-		System.out.println("entered bottom jwindow");
-		if (arg0.getXOnScreen() < this.bounds.x + 15
-				&& arg0.getXOnScreen() > this.bounds.x - 15) {
-			this.setCursor(new Cursor(Cursor.SW_RESIZE_CURSOR));
-		} 
-		else if (arg0.getXOnScreen() < this.bounds.getMaxX() + 15
-				&& arg0.getXOnScreen() > this.bounds.getMaxX() - 15) {
+		System.out.println("entered bottom or top jwindow");
+		if (arg0.getXOnScreen() < this.bounds.getMaxX() + 25
+				&& arg0.getXOnScreen() > this.bounds.getMaxX() - 25
+				&& arg0.getYOnScreen() < this.bounds.getMaxY() + 35
+				&& arg0.getYOnScreen() > this.bounds.getMaxY() - 15) {
+			System.out.println("sag alt");
+			windowKonum = "sag alt";
 			this.setCursor(new Cursor(Cursor.SE_RESIZE_CURSOR));
+		} else if (arg0.getXOnScreen() < this.bounds.getMaxX() + 15
+				&& arg0.getXOnScreen() > this.bounds.getMaxX() - 15
+				&& arg0.getYOnScreen() < this.bounds.y + 15
+				&& arg0.getYOnScreen() > this.bounds.y - 15) {
+			System.out.println("sag ust");
+			windowKonum = "sag ust";
+			this.setCursor(new Cursor(Cursor.NE_RESIZE_CURSOR));
+		} else if (arg0.getXOnScreen() < this.bounds.x + 15
+				&& arg0.getXOnScreen() > this.bounds.x - 15
+				&& arg0.getYOnScreen() < this.bounds.y + 15
+				&& arg0.getYOnScreen() > this.bounds.y - 15) {
+			System.out.println("sol ust");
+			windowKonum = "sol ust";
+			this.setCursor(new Cursor(Cursor.NW_RESIZE_CURSOR));
+		} else if (arg0.getXOnScreen() < this.bounds.x + 15
+				&& arg0.getXOnScreen() > this.bounds.x - 15
+				&& arg0.getYOnScreen() < this.bounds.getMaxY() + 35
+				&& arg0.getYOnScreen() > this.bounds.getMaxY() - 15) {
+			System.out.println("sol alt");
+			windowKonum = "sol alt";
+			this.setCursor(new Cursor(Cursor.SW_RESIZE_CURSOR));
 		}
+		
 
 	}
 

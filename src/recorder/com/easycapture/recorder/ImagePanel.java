@@ -14,10 +14,10 @@ import org.imgscalr.Scalr;
 
 class ImagePanel extends JPanel {
 
-	private final int MAX_WIDTH = 600;
+	private final int MAX_WIDTH = 800;
 	private final int MAX_HEIGHT = 600;
 
-	private Image img;
+	private Image img, img2;
 	private Dimension size;
 
 	public ImagePanel(String img) {
@@ -26,22 +26,23 @@ class ImagePanel extends JPanel {
 
 	public ImagePanel(Image img) {
 		
-		// this.img = img;
+		this.img = img;
 		
 		int width = img.getWidth(null);
 		int height= img.getHeight(null);
 		System.out.println(width);
 		
-		double factor = 1;
-		if (width > MAX_WIDTH) {
-			factor = (double) MAX_WIDTH / width;
-			int newheight= (int) (height*factor);//!
-			System.out.println(factor);
-			System.out.println(newheight);
-			this.img = img.getScaledInstance(MAX_WIDTH, newheight, Image.SCALE_DEFAULT);
-		}	
-		else
-			this.img = img;
+//		double factor = 1;
+//		if (width > MAX_WIDTH) {
+//			factor = (double) MAX_WIDTH / width;
+//			int newheight= (int) (height*factor);//!
+//			System.out.println(factor);
+//			System.out.println(newheight);
+//			img2= new ImageIcon(img).getImage();
+//			this.img = img2.getScaledInstance(MAX_WIDTH, newheight, Image.SCALE_DEFAULT);
+//		}	
+//		else
+//			this.img = img;
 		
 		size = new Dimension(img.getWidth(null), img.getHeight(null));
 		setPreferredSize(size);

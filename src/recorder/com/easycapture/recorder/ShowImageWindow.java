@@ -6,11 +6,13 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Frame;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.LayoutManager;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -22,6 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -39,9 +42,10 @@ public class ShowImageWindow extends JFrame implements ActionListener {
 
 	JPanel panelsoru;
 	
-	ImagePanel img;	
-
-	File selFile;
+	ImagePanel img;		
+	
+	private final int MAX_WIDTH = 800;
+	private final int MAX_HEIGHT = 600;
 
 	ShowImageWindow() {
 
@@ -49,13 +53,13 @@ public class ShowImageWindow extends JFrame implements ActionListener {
 
 		add(panelsoru, BorderLayout.CENTER);
 		
-		img = new ImagePanel("u.jpg");
-		panelsoru.add(img);
+		PicturePanel pp= new PicturePanel(new File("a.jpg"));
+		panelsoru.add( pp );	
 
 		setTitle("Resim Görüntüleme");
 
 		setLocation(200, 50);
-		setSize(550, 400);
+		setSize(800,600);
 
 	}
 

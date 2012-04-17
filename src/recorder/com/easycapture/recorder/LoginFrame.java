@@ -31,6 +31,8 @@ import javax.swing.JTextField;
 import javax.swing.JWindow;
 import javax.swing.border.EmptyBorder;
 
+import com.argeloji.messaging.MessengerServer;
+
 public class LoginFrame extends JFrame implements ActionListener {
 
 	JButton SUBMIT;
@@ -70,8 +72,12 @@ public class LoginFrame extends JFrame implements ActionListener {
 			MainFrame mf=new MainFrame(value1);
 			setVisible(false);
 			mf.setVisible(true);
-			//JLabel label = new JLabel("Hoþgeldiniz:" + value1);
-			//mf.getContentPane().add(label);
+			
+			//messaging
+			MessengerServer ms = new MessengerServer();
+			Thread thread = new Thread(ms);
+			thread.start();			
+			
 		} else {
 			System.out.println("Geçersiz kullanýcý adý/þifre");
 			JOptionPane.showMessageDialog(this, "Geçersiz kullanýcý adý/þifre",

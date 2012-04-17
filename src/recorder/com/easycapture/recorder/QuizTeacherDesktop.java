@@ -6,11 +6,13 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Frame;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.LayoutManager;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -22,6 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -35,8 +38,14 @@ import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-public class QuizTeacherDesktop extends JFrame implements ActionListener {
 
+
+public class QuizTeacherDesktop extends JFrame implements ActionListener {
+	
+	private final int MAX_WIDTH = 800;
+	private final int MAX_HEIGHT = 600;
+	
+	
 	JPanel panelSure, panelsoru, panelalt;
 
 	JRadioButton ja, jb, jc, jd, je;
@@ -44,7 +53,7 @@ public class QuizTeacherDesktop extends JFrame implements ActionListener {
 	ImagePanel img;
 	int saat, dakika, saniye;
 
-	JComboBox cbSaat, cbDakika, cbSaniye;
+	JComboBox cbSaat, cbDakika, cbSaniye, cbSecenekSayisi;
 
 	File selFile;
 
@@ -52,7 +61,7 @@ public class QuizTeacherDesktop extends JFrame implements ActionListener {
 
 		panelsoru = new JPanel(new GridLayout(1, 1));
 
-		panelSure = new JPanel(new GridLayout(1, 7));
+		panelSure = new JPanel(new GridLayout(1, 9));
 
 		cbSaniye = new JComboBox();
 		cbDakika = new JComboBox();
@@ -60,6 +69,12 @@ public class QuizTeacherDesktop extends JFrame implements ActionListener {
 		cbSaat.addItem("0");
 		cbSaat.addItem("1");
 		cbSaat.addItem("2");
+		
+		cbSecenekSayisi = new JComboBox();
+		cbSecenekSayisi.addItem("2");
+		cbSecenekSayisi.addItem("3");
+		cbSecenekSayisi.addItem("4");
+		cbSecenekSayisi.addItem("5");
 
 		for (int i = 0; i < 60; i++) {
 			cbDakika.addItem(i);
@@ -73,6 +88,8 @@ public class QuizTeacherDesktop extends JFrame implements ActionListener {
 		panelSure.add(new JLabel("dakika"));
 		panelSure.add(cbSaniye);
 		panelSure.add(new JLabel("saniye"));
+		panelSure.add(new JLabel("Seçenek Sayýsý:"));
+		panelSure.add(cbSecenekSayisi);
 
 		panelalt = new JPanel(new GridLayout(3, 1));
 		jbSoruSec = new JButton("Soru Seç");
@@ -90,7 +107,7 @@ public class QuizTeacherDesktop extends JFrame implements ActionListener {
 		setTitle("Quiz : Öðretmen");
 
 		setLocation(200, 50);
-		setSize(550, 400);
+		setSize(850, 600);
 
 	}
 
@@ -101,7 +118,8 @@ public class QuizTeacherDesktop extends JFrame implements ActionListener {
 					Integer.parseInt(cbSaat.getSelectedItem().toString()),
 					Integer.parseInt(cbDakika.getSelectedItem().toString()),
 					Integer.parseInt(cbSaniye.getSelectedItem().toString()),
-					selFile.getName());
+					selFile,
+					Integer.parseInt(cbSecenekSayisi.getSelectedItem().toString()));
 			qc.setVisible(true);
 		}
 		if (evt.getActionCommand().equals("Soru Seç")) {
@@ -122,8 +140,8 @@ public class QuizTeacherDesktop extends JFrame implements ActionListener {
 			selFile = fileChooser.getSelectedFile();
 			// tekrar soru seçtiði zaman resimler yan yana geliyor. son seçilen
 			// gönderiliyor orasý ok.
-			img = new ImagePanel(selFile.getName());
-			panelsoru.add(img);
+			PicturePanel pp= new PicturePanel(selFile);
+			panelsoru.add( pp );				
 
 			pack();
 
