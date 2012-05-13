@@ -1,4 +1,4 @@
-package com.easycapture.recorder;
+package com.argeloji.server;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -22,6 +22,8 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
@@ -38,14 +40,20 @@ import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-
+import com.argeloji.cons.Enums.AnswerType;
+import com.argeloji.cons.Enums.MessageType;
+import com.argeloji.entity.Question;
+import com.argeloji.entity.ServerDispatcher;
+import com.argeloji.util.ImageFileFilter;
+import com.argeloji.util.ImagePanel;
+import com.argeloji.util.LabelAccessory;
+import com.argeloji.util.PicturePanel;
 
 public class QuizTeacherDesktop extends JFrame implements ActionListener {
-	
+
 	private final int MAX_WIDTH = 800;
 	private final int MAX_HEIGHT = 600;
-	
-	
+
 	JPanel panelSure, panelsoru, panelalt;
 
 	JRadioButton ja, jb, jc, jd, je;
@@ -69,7 +77,7 @@ public class QuizTeacherDesktop extends JFrame implements ActionListener {
 		cbSaat.addItem("0");
 		cbSaat.addItem("1");
 		cbSaat.addItem("2");
-		
+
 		cbSecenekSayisi = new JComboBox();
 		cbSecenekSayisi.addItem("2");
 		cbSecenekSayisi.addItem("3");
@@ -113,17 +121,50 @@ public class QuizTeacherDesktop extends JFrame implements ActionListener {
 
 	public void actionPerformed(ActionEvent evt) {
 		if (evt.getActionCommand().equals("Gönder")) {
+
 			this.setVisible(false);
-			QuizClientDesktop qc = new QuizClientDesktop(
-					Integer.parseInt(cbSaat.getSelectedItem().toString()),
-					Integer.parseInt(cbDakika.getSelectedItem().toString()),
-					Integer.parseInt(cbSaniye.getSelectedItem().toString()),
-					selFile,
-					Integer.parseInt(cbSecenekSayisi.getSelectedItem().toString()));
-			qc.setVisible(true);
+
+			// duration
+			Calendar duration = new GregorianCalendar();
+			duration.set(Calendar.HOUR,
+					Integer.parseInt(cbSaat.getSelectedItem().toString()));
+			duration.set(Calendar.MINUTE,
+					Integer.parseInt(cbDakika.getSelectedItem().toString()));
+			duration.set(Calendar.SECOND,
+					Integer.parseInt(cbDakika.getSelectedItem().toString()));
+
+			// number of choices
+			byte numOfChoices = Byte.parseByte(cbSecenekSayisi
+					.getSelectedItem().toString());
+
+			Question q1 = new Question(AnswerType.MultipleChoice, numOfChoices,
+					duration, selFile);
+
+			ServerDispatcher sd= ServerDispatcher.getInstance();
+			sd.send(MessageType.SendQuestion, q1);
+			
+
+			// QuizClientDesktop qc = new QuizClientDesktop(
+			// Integer.parseInt(cbSaat.getSelectedItem().toString()),
+			// Integer.parseInt(cbDakika.getSelectedItem().toString()),
+			// Integer.parseInt(cbDakika.getSelectedItem().toString()),
+			// selFile,
+			// Integer.parseInt(cbSecenekSayisi.getSelectedItem().toString()));
+			// qc.setVisible(true);
 		}
 		if (evt.getActionCommand().equals("Soru Seç")) {
 			JFileChooser fileChooser = new JFileChooser();
+			
+			// C: test klasörünün default klasör yapmak için
+		    File f=null;
+			try {
+				f = new File(new File("C:\\test\\").getCanonicalPath());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			fileChooser.setCurrentDirectory(f);
 
 			fileChooser.setAccessory(new LabelAccessory(fileChooser));
 
@@ -140,8 +181,8 @@ public class QuizTeacherDesktop extends JFrame implements ActionListener {
 			selFile = fileChooser.getSelectedFile();
 			// tekrar soru seçtiði zaman resimler yan yana geliyor. son seçilen
 			// gönderiliyor orasý ok.
-			PicturePanel pp= new PicturePanel(selFile);
-			panelsoru.add( pp );				
+			PicturePanel pp = new PicturePanel(selFile);
+			panelsoru.add(pp);
 
 			pack();
 

@@ -7,28 +7,33 @@ import java.io.Serializable;
 
 public class Student implements Serializable {
 
-	private String sID;
+	private String _studentID;
 	
 	public Student(String studentID)
 	{
-		sID = studentID;
+		_studentID = studentID;
+	}
+	
+	public String getStudentID()
+	{
+		return _studentID;
 	}
 	
 	private void writeObject(ObjectOutputStream oos) throws IOException
 	{
 		oos.defaultWriteObject();
-		oos.writeObject(sID);
+		oos.writeObject(_studentID);
         oos.flush();
 	}
 	
 	private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException
 	{
 		ois.defaultReadObject();
-		sID = (String)ois.readObject();
+		_studentID = (String)ois.readObject();
 	}
 
 	public void printID()
 	{
-		System.out.println("Student ID: " + sID);
+		System.out.println("Student ID: " + _studentID);
 	}
 }

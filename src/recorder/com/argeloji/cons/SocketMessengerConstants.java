@@ -1,6 +1,8 @@
 package com.argeloji.cons;
 
 public class SocketMessengerConstants {
+	// address for the server
+	public static final String SERVER_ADDRESS = "127.0.0.1";
 	// address for multicast datagrams
 	public static final String MULTICAST_ADDRESS = "224.0.0.1";
 	// port for listening for multicast datagrams

@@ -1,4 +1,4 @@
-package com.easycapture.recorder;
+package com.argeloji.client;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -38,6 +38,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import com.argeloji.util.ImagePanel;
+import com.argeloji.util.PicturePanel;
+
 public class ShowImageWindow extends JFrame implements ActionListener {
 
 	JPanel panelsoru;
@@ -46,6 +49,22 @@ public class ShowImageWindow extends JFrame implements ActionListener {
 	
 	private final int MAX_WIDTH = 800;
 	private final int MAX_HEIGHT = 600;
+	
+	public ShowImageWindow(String filePath) {
+
+		panelsoru = new JPanel(new GridLayout(1, 1));
+
+		add(panelsoru, BorderLayout.CENTER);
+		
+		PicturePanel pp= new PicturePanel(new File(filePath));
+		panelsoru.add( pp );	
+
+		setTitle("Resim Görüntüleme");
+
+		setLocation(200, 50);
+		setSize(800,600);
+
+	}
 
 	ShowImageWindow() {
 

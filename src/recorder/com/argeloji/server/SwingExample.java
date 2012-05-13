@@ -1,3 +1,4 @@
+package com.argeloji.server;
 /**
  *
  * The MIT License
@@ -80,7 +81,7 @@ public class SwingExample {
      *            args not read.
      * @throws IOException
      */
-    public static void main(String...s) throws IOException {
+    public SwingExample() throws IOException {
     	
     	// EXAMPLE CODE START
         // Defining data plots.
@@ -190,6 +191,11 @@ public class SwingExample {
         String url4 = chart4.toURLString();
         displayUrlString(url4);
 
+    }
+    
+    public static void main() throws IOException 
+    {
+    	SwingExample se= new SwingExample();
     }
 
     /**

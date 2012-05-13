@@ -1,4 +1,4 @@
-package com.easycapture.recorder;
+package com.argeloji.util;
 
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -16,7 +16,7 @@ public class PicturePanel extends JPanel {
 	private final int MAX_WIDTH = 800;
 	private final int MAX_HEIGHT = 600;
 	
-	PicturePanel(File file)
+	public PicturePanel(File file)
 	{
 BufferedImage myPicture = null;
 		

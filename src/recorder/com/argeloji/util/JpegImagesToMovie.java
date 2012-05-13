@@ -1,4 +1,4 @@
-package com.easycapture.recorder;
+package com.argeloji.util;
 
 /*
  * @(#)JpegImagesToMovie.java	1.3 01/03/13

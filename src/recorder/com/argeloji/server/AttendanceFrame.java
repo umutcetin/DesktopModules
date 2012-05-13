@@ -1,4 +1,4 @@
-package com.easycapture.recorder;
+package com.argeloji.server;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

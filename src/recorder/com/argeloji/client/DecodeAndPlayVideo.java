@@ -1,4 +1,4 @@
-package com.easycapture.recorder;
+package com.argeloji.client;
 /*******************************************************************************
  * Copyright (c) 2008, 2010 Xuggle Inc.  All rights reserved.
  *
@@ -43,17 +43,17 @@ public class DecodeAndPlayVideo
    *          Must contain one string which represents a filename
    */
 
-  public static void main(String[] args)
+  public DecodeAndPlayVideo (String filePath)
   {
 //    if (args.length <= 0)
 //      throw new IllegalArgumentException(
 //          "must pass in a filename as the first argument");
 
-    String filename = "1332944437322.mp4";
+    //String filename = "1332944437322.mp4";
 
     // create a new reader
 
-    IMediaReader reader = ToolFactory.makeReader(filename);
+    IMediaReader reader = ToolFactory.makeReader(filePath);
 
     //
     // Create a MediaViewer object and tell it to play video only

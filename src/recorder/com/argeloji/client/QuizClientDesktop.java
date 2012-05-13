@@ -1,4 +1,4 @@
-package com.easycapture.recorder;
+package com.argeloji.client;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.LinkedList;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -18,6 +19,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
+import com.argeloji.cons.Enums.AnswerType;
+import com.argeloji.cons.Enums.MessageType;
+import com.argeloji.entity.Answer;
+import com.argeloji.entity.ClientDispatcher;
+import com.argeloji.entity.Question;
+import com.argeloji.util.ImagePanel;
+import com.argeloji.util.PicturePanel;
+
 public class QuizClientDesktop extends JFrame implements ActionListener {	
 	
 	JPanel panelust, panelsoru, panelalt;
@@ -26,6 +35,8 @@ public class QuizClientDesktop extends JFrame implements ActionListener {
 	JButton jbGonder;
 	ImagePanel img;
 	int saat, dakika, saniye;
+	
+	Question question;
 	
 	ArrayList<JRadioButton> secenekler= new ArrayList<JRadioButton>();
 
@@ -85,6 +96,63 @@ public class QuizClientDesktop extends JFrame implements ActionListener {
 		TimerThread();
 	}
 	
+public QuizClientDesktop(Question q) {
+		
+		this.question= q;
+		this.saat=q.getDurationHour();
+		this.dakika=q.getDurationMinute();
+		this.saniye=q.getDurationSecond();
+
+		panelust = new JPanel(new GridLayout(1, 1));
+		labelTime= new JLabel();
+		panelust.add(labelTime);
+
+		panelsoru = new JPanel(new GridLayout(1, 1));
+		PicturePanel pp= new PicturePanel(q.getFile());
+		panelsoru.add( pp );	
+		
+		panelalt = new JPanel(new GridLayout(1, 6));
+		
+		
+		for (int i=1; i<=q.getNumberOfChoices(); i++)
+		{
+			String harf = null;
+			if(i==1) harf="a";
+			else if(i==2) harf="b";
+			else if(i==3) harf="c";
+			else if(i==4) harf="d";
+			else if(i==5) harf="e";
+			
+			JRadioButton rbuton= new JRadioButton(harf);
+			secenekler.add(rbuton);
+			panelalt.add(rbuton);
+		}
+		
+		jbGonder= new JButton("Gönder");
+		jbGonder.addActionListener(this);
+		panelalt.add(jbGonder);
+
+		add(panelust, BorderLayout.NORTH);	
+		add(panelsoru, BorderLayout.CENTER);
+		add(panelalt, BorderLayout.SOUTH);
+
+		setTitle("Quiz : Öðrenci");
+
+		setLocation(200, 50);
+		
+		BufferedImage myPicture=null;
+		try {
+			myPicture= ImageIO.read(q.getFile());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+				
+		setSize(850,600);
+		
+		TimerThread();
+	}
+	
 	public void TimerThread() {
 		try {
 			Runnable r = new Runnable() {
@@ -112,7 +180,7 @@ public class QuizClientDesktop extends JFrame implements ActionListener {
 				Thread.sleep(1000);
 				
 				//load test. passed.
-				System.out.println(System.currentTimeMillis()-timeNow);
+				//System.out.println(System.currentTimeMillis()-timeNow);
 				timeNow= System.currentTimeMillis();
 			}
 			JOptionPane.showMessageDialog(this, "Süre doldu.");
@@ -127,13 +195,23 @@ public class QuizClientDesktop extends JFrame implements ActionListener {
 			this.setVisible(false); //Buraya ve close iþlemlerine bir düzenleme yapýlmasý gerekiyor. 
 			//sayacýn pencere kapandýktan sonra devam edip uyarý vermemesi için
 			
-			String result="";
+			LinkedList<Object> answerList= new LinkedList<Object>();
 			for(JRadioButton j: secenekler)
 			{
 				if (j.isSelected())
-					result+= j.getText()+", ";
-			}
-			JOptionPane.showMessageDialog(new JFrame(), "seçilenler: "+result);
+					answerList.add(j.getText());
+			}			
+			
+			ClientDispatcher cd=null;
+			try {
+				cd= ClientDispatcher.getInstance();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			
+			
+			Answer a= new Answer(question.getQuestionID(), cd.getStudent().getStudentID(), AnswerType.MultipleChoice, answerList);
+			cd.send(MessageType.SendAnswer, a);
 		}
 
 	}

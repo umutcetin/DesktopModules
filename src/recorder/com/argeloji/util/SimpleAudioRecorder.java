@@ -1,4 +1,4 @@
-package com.easycapture.recorder;
+package com.argeloji.util;
 
 /*
  *	SimpleAudioRecorder.java

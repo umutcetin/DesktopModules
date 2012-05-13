@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.Calendar;
 
 import com.argeloji.cons.Enums;
 import com.argeloji.cons.Enums.MessageType;
@@ -12,8 +13,8 @@ import com.argeloji.entity.*;
 public class MessageSender implements Runnable {
 
 	private Socket clientSocket; // Socket over which to send message
-	private MessageType mt;
-	private Student s;
+	private MessageType _messageType;
+	private Object _object;
 	
 	public MessageSender(Socket socket)
 	{
@@ -23,28 +24,13 @@ public class MessageSender implements Runnable {
 	public MessageSender(Socket socket, Enums.MessageType messageType, Object object)
 	{
 		clientSocket = socket; // store Socket for client
-		mt = messageType;
-		switch (mt)
-		{
-		case StudentConnected:
-			s = (Student)object;
-		}
-		
+		_messageType = messageType;
+		_object = object;
 	}
 	
 	public void run()
 	{
 		send();
-	}
-	
-	private void send()
-	{
-		switch (mt)
-		{
-		case StudentConnected:
-			if (s != null)
-				this.send(mt, s);
-		}
 	}
 	
 	/*
@@ -70,16 +56,40 @@ public class MessageSender implements Runnable {
 	}
 	*/
 	
-	private void send(Enums.MessageType messageType, Student student)
+	private void send()
 	{
 		OutputStream os;
 		try 
 		{
 				os = clientSocket.getOutputStream();
 	            ObjectOutputStream objectStream = new ObjectOutputStream(os);
-	            objectStream.writeInt(messageType.ordinal());
-	            System.out.println("Gönderilen: " + messageType.ordinal());
-	            objectStream.writeObject(student);
+	            objectStream.writeInt(_messageType.ordinal());
+	            System.out.println("Gönderilen: " + _messageType.ordinal());
+
+	    		switch (_messageType)
+	    		{
+	    		//case StudentConnectionRequest:
+		        //    objectStream.writeObject((Student)_object);
+	    		//	break;
+	    		case StudentConnectionRequestProcessedByServer:
+	    			System.out.println("sender case StudentConnectionRequestProcessedByServer:");
+	    			break;
+	    		case SendStudentInfo:
+		            objectStream.writeObject((Student)_object);
+	    			break;
+	    		case SendQuestion:
+		            objectStream.writeObject((Question)_object);
+	    			break;
+	    		case SendQuestionDurationIncrease:
+		            objectStream.writeObject((Calendar)_object);
+	    			break;
+	    		case SendAnswer:
+		            objectStream.writeObject((Answer)_object);
+	    			break;
+	    		case SendFile:
+		            objectStream.writeObject((FileContainer)_object);
+	    			break;
+	    		}
 	            objectStream.flush();
 		} 
 		catch (IOException e) {

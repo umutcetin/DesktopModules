@@ -1,4 +1,4 @@
-package com.easycapture.recorder;
+package com.argeloji.server;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -8,6 +8,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 
 import javax.swing.Box;
@@ -19,6 +20,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import com.argeloji.cons.Enums.FileType;
+import com.argeloji.cons.Enums.MessageType;
+import com.argeloji.entity.FileContainer;
+import com.argeloji.entity.ServerDispatcher;
+import com.argeloji.util.LabelAccessory;
+import com.sun.media.rtsp.Server;
+
 public class FileChooser extends JFrame implements ActionListener {
 
 	// JButton btnBrowse;
@@ -26,6 +34,8 @@ public class FileChooser extends JFrame implements ActionListener {
 	JLabel flabel;
 	JLabel flabelLM;
 	JLabel flabelSize;
+	
+	File selFile;
 
 	FileChooser() {
 
@@ -73,9 +83,20 @@ public class FileChooser extends JFrame implements ActionListener {
 		JFileChooser fileChooser = new JFileChooser();
 
 		fileChooser.setAccessory(new LabelAccessory(fileChooser));
+		
+		// C: test klasörünün default klasör yapmak için
+	    File f=null;
+		try {
+			f = new File(new File("C:\\test\\").getCanonicalPath());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		fileChooser.setCurrentDirectory(f);
 
 		fileChooser.showOpenDialog(null);
-		File selFile = fileChooser.getSelectedFile();
+		selFile = fileChooser.getSelectedFile();
 
 		flabel.setText("Seçilen Dosya: " + selFile.getName());
 		flabelSize.setText("Boyut: " + selFile.length() / 1024 + " Kb");
@@ -90,7 +111,24 @@ public class FileChooser extends JFrame implements ActionListener {
 
 	public void actionPerformed(ActionEvent evt) {
 		if (evt.getActionCommand().equals("Gönder")) {
-			this.setVisible(false);
+			this.setVisible(false);		
+			
+			String extension= selFile.getAbsolutePath().split("\\.")[1];
+			
+			FileContainer fc;
+			
+			if (extension.equals("jpg"))
+				fc= new FileContainer(selFile, FileType.Image);
+			else if (extension.equals("mp4"))
+				fc= new FileContainer(selFile, FileType.Video);
+			else 
+				fc= new FileContainer(selFile, FileType.Other);
+			
+			ServerDispatcher sd= ServerDispatcher.getInstance();
+			
+			sd.send(MessageType.SendFile, fc);
+			
+			
 		}
 	}
 }

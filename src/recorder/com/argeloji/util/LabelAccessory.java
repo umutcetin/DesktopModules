@@ -1,4 +1,4 @@
-package com.easycapture.recorder;
+package com.argeloji.util;
 
 import java.awt.Dimension;
 import java.awt.Image;
@@ -10,7 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 
-class LabelAccessory extends JLabel implements PropertyChangeListener {
+public class LabelAccessory extends JLabel implements PropertyChangeListener {
 	  private static final int PREFERRED_WIDTH = 400;
 	  private static final int PREFERRED_HEIGHT = 300;
 

@@ -5,10 +5,28 @@ public class Enums {
 	public enum MessageType
 	{
 		ConnectionStatusCheck,
-		StudentConnected,
+		//StudentConnectionRequest,
+		StudentConnectionRequestProcessedByServer,
+		SendStudentInfo,
+		//StudentConnected,
 		StudentDisconnected,
 		SendQuestion,
 		SendQuestionDurationIncrease,
-		SendAnswer
+		SendAnswer,
+		SendFile
+	}
+	
+	public enum AnswerType
+	{
+		MultipleChoice,
+		Number
+	}
+	
+	public enum FileType
+	{
+		Video,
+		Audio,
+		Image,
+		Other
 	}
 }

@@ -1,4 +1,4 @@
-package com.easycapture.recorder;
+package com.argeloji.util;
 
 import java.awt.Dimension;
 import java.awt.Rectangle;
@@ -12,6 +12,7 @@ import java.util.Vector;
 
 import javax.imageio.ImageIO;
 import javax.media.MediaLocator;
+
 
 /**
  * Main class that starts the Recording process of EasyCapture.

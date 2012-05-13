@@ -1,4 +1,4 @@
-package com.easycapture.recorder;
+package com.argeloji.server;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -32,18 +32,23 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import com.argeloji.client.ClientGUI;
+import com.argeloji.entity.ServerDispatcher;
+
 public class MainFrame extends JFrame implements ActionListener {
 
-	JButton btnYoklama, btnCapture, btnDosyaGonder, btnSnapshot;
+	JButton btnYoklama, btnCapture, btnDosyaGonder, btnSnapshot, btnQuiz;
 	JComboBox cbSinif, cbDers;
 	JPanel panel;
-	JLabel labeluser,labelip;
+	JLabel labeluser, labelip;
 
 	MainFrame(String user) {
-		
+
+		ServerDispatcher sd = ServerDispatcher.getInstance();
+
 		InetAddress thisIp = null;
 		try {
-			thisIp =InetAddress.getLocalHost();
+			thisIp = InetAddress.getLocalHost();
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -51,7 +56,7 @@ public class MainFrame extends JFrame implements ActionListener {
 
 		labeluser = new JLabel("Kullanýcý: " + user);
 		labeluser.setFont(new Font("Tahoma", Font.BOLD, 20));
-		
+
 		labelip = new JLabel(thisIp.toString());
 
 		String[] sinifList = { "Sýnýf Seçiniz", "9/A", "9/B", "9/C", "9/D " };
@@ -65,6 +70,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		btnSnapshot = new JButton("Resim Yakala");
 		btnCapture = new JButton("Video Yakala");
 		btnDosyaGonder = new JButton("Sýnýfa Dosya Gönder");
+		btnQuiz = new JButton("Sýnýfa Soru Gönder");
 
 		panel = new JPanel(new GridLayout(0, 1));
 		panel.add(labeluser);
@@ -75,6 +81,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		panel.add(btnCapture);
 		panel.add(btnSnapshot);
 		panel.add(btnDosyaGonder);
+		panel.add(btnQuiz);
 
 		add(panel, BorderLayout.CENTER);
 
@@ -82,6 +89,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		btnCapture.addActionListener(this);
 		btnSnapshot.addActionListener(this);
 		btnDosyaGonder.addActionListener(this);
+		btnQuiz.addActionListener(this);
 		setTitle("Ana Menü");
 
 		setLocation(200, 200);
@@ -91,30 +99,39 @@ public class MainFrame extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent evt) {
 		String valueSinif = cbSinif.getSelectedItem().toString();
 		String valueDers = cbDers.getSelectedItem().toString();
-		
-		if (evt.getActionCommand().equals("Yoklama")) {			
-				AttendanceFrame tf= new AttendanceFrame(valueSinif);
-				tf.setVisible(true);			
-		}
-		if (evt.getActionCommand().equals("Resim Yakala")) {
-				ResizableJWindow tf= new ResizableJWindow(new Rectangle(100,100,600,400),true);
-				tf.setVisible(true);
-			}
-		if (evt.getActionCommand().equals("Video Yakala")) {
-			ResizableJWindow tf= new ResizableJWindow(new Rectangle(100,100,600,400),false);
+
+		if (evt.getActionCommand().equals("Yoklama")) {
+			AttendanceFrame tf = new AttendanceFrame(valueSinif);
 			tf.setVisible(true);
 		}
+		if (evt.getActionCommand().equals("Resim Yakala")) {
+			ResizableJWindow tf = new ResizableJWindow(new Rectangle(100, 100,
+					600, 400), true);
+			tf.setVisible(true);
+		}
+		if (evt.getActionCommand().equals("Video Yakala")) {
+			ResizableJWindow tf = new ResizableJWindow(new Rectangle(100, 100,
+					600, 400), false);
+			tf.setVisible(true);
+		}
+		if (evt.getActionCommand().equals("Sýnýfa Soru Gönder")) {
+			QuizTeacherDesktop qt = new QuizTeacherDesktop();
+			qt.setVisible(true);
+		}
 		if (evt.getActionCommand().equals("Sýnýfa Dosya Gönder")) {
-					FileChooser fc= new FileChooser();
-					fc.setSize(400, 220);
-					//fc.setVisible(true);
-				}
+			FileChooser fc = new FileChooser();
+			fc.setSize(400, 220);
+			// fc.setVisible(true);
+		}
+		
 	}
 
 	public static void main(String arg[]) {
 		try {
 			MainFrame frame = new MainFrame("demo");
 			frame.setVisible(true);
+			ClientGUI cg= new ClientGUI();
+			cg.setVisible(true);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}

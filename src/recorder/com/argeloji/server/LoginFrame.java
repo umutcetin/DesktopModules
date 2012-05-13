@@ -1,4 +1,4 @@
-package com.easycapture.recorder;
+package com.argeloji.server;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -31,7 +31,8 @@ import javax.swing.JTextField;
 import javax.swing.JWindow;
 import javax.swing.border.EmptyBorder;
 
-import com.argeloji.messaging.MessengerServer;
+
+
 
 public class LoginFrame extends JFrame implements ActionListener {
 
@@ -74,9 +75,9 @@ public class LoginFrame extends JFrame implements ActionListener {
 			mf.setVisible(true);
 			
 			//messaging
-			MessengerServer ms = new MessengerServer();
-			Thread thread = new Thread(ms);
-			thread.start();			
+//			MessengerServer ms = new MessengerServer();
+//			Thread thread = new Thread(ms);
+//			thread.start();			
 			
 		} else {
 			System.out.println("Geçersiz kullanýcý adý/þifre");

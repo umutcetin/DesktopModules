@@ -1,4 +1,4 @@
-package com.easycapture.recorder;
+package com.argeloji.client;
 
 import java.awt.event.*;
 import java.awt.*;

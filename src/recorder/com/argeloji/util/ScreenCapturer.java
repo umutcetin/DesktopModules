@@ -1,4 +1,4 @@
-package com.easycapture.recorder;
+package com.argeloji.util;
 import java.awt.AWTException;
 import java.awt.Rectangle;
 import java.awt.Robot;
@@ -18,7 +18,7 @@ public class ScreenCapturer {
 	 * @param height yukseklik
 	 * @throws IOException 
 	 */
-	public void draw(int x1, int y1, int width, int height) throws IOException {
+	public void draw(int x1, int y1, int width, int height, String filePath) throws IOException {
 		
 		//to find the screen dimension
 
@@ -42,7 +42,7 @@ public class ScreenCapturer {
 
 		//convert BufferedImage to JPG File
 
-		File file = new File("screen.jpg");
+		File file = new File(filePath);
 		ImageIO.write(image, "jpg", file);
 		
 

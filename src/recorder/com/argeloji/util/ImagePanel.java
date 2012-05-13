@@ -1,4 +1,4 @@
-package com.easycapture.recorder;
+package com.argeloji.util;
 
 import java.awt.AlphaComposite;
 import java.awt.Dimension;
@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 import org.imgscalr.Scalr;
 
-class ImagePanel extends JPanel {
+public class ImagePanel extends JPanel {
 
 	private final int MAX_WIDTH = 800;
 	private final int MAX_HEIGHT = 600;
