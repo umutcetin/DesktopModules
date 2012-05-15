@@ -34,6 +34,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import com.argeloji.entity.ServerDispatcher;
+
 public class AttendanceFrame extends JFrame implements ActionListener {
 //deneme comment
 	JButton btnKaydet;
@@ -43,23 +45,25 @@ public class AttendanceFrame extends JFrame implements ActionListener {
 	
 	Hashtable<String , JPanel> students= new Hashtable<String, JPanel>();
 	
-	String[] ogrList = { "MÜNÝRE GAMZE EKÝZER", "YASÝN SARTIK",
-			"YASÝN SARTIK", "HALÝME DALBOY", "HALÝME DALBOY",
-			"OGRENCI 5", "OGRENCI 6",
-			"OGRENCI 7", "OGRENCI 8",
-			"OGRENCI 9", "OGRENCI 10",
-			"OGRENCI 11", "OGRENCI 12",
-			"OGRENCI 13", "OGRENCI 14",
-			"OGRENCI 15", "OGRENCI 16",
-			"OGRENCI 17", "OGRENCI 18",
-			"OGRENCI 19" };
-	String[] noList = { "070401001", "070401004", "070401007", "070401001",
-			"070401001", "070401001", "1", "2",
-			"3", "4", "5", "6",
-			"7", "8", "9", "10",
-			"11", "12", "13", "14" };
+	String[] ogrList = { "OGRENCI OGRENCI", "OGRENCI OGRENCI",
+			"OGRENCI OGRENCI", "OGRENCI OGRENCI", "OGRENCI OGRENCI",
+			"OGRENCI OGRENCI", "OGRENCI OGRENCI",
+			"OGRENCI OGRENCI", "OGRENCI OGRENCI",
+			"OGRENCI OGRENCI", "OGRENCI OGRENCI",
+			"OGRENCI OGRENCI", "OGRENCI OGRENCI",
+			"OGRENCI OGRENCI", "OGRENCI OGRENCI",
+			"OGRENCI OGRENCI", "OGRENCI OGRENCI",
+			"OGRENCI OGRENCI", "OGRENCI OGRENCI",
+			"OGRENCI OGRENCI" };
+	String[] noList = { "1", "2", "3", "4",
+			"5", "6", "7", "8",
+			"9", "10",
+			"11", "12", "13", "14", "15", "16", "17", "18", "19", "0" };
 
 	AttendanceFrame(String sinif) {
+		
+		ServerDispatcher sd= ServerDispatcher.getInstance();
+		sd.register(this);
 
 		label1 = new JLabel("Sýnýf: " + sinif);
 		label1.setFont(new Font("Tahoma", Font.BOLD, 20));		
@@ -102,19 +106,21 @@ public class AttendanceFrame extends JFrame implements ActionListener {
 		btnKaydet.addActionListener(this);
 
 		setTitle("Yoklama");
-
-		isHere("1");
-		isHere("5");
-		isHere("9");
-		isHere("10");
-		isHere("11");
-		isHere("12");
-		isHere("13");
-		isHere("14");
 		
-		isAbsent("2");
-		isAbsent("3");
-		isAbsent("6");
+		
+
+//		isHere("1");
+//		isHere("5");
+//		isHere("9");
+//		isHere("10");
+//		isHere("11");
+//		isHere("12");
+//		isHere("13");
+//		isHere("14");
+//		
+//		isAbsent("2");
+//		isAbsent("3");
+//		isAbsent("6");
 		
 		
 		setLocation(200, 50);
@@ -132,6 +138,7 @@ public class AttendanceFrame extends JFrame implements ActionListener {
 	{
 		JPanel stu= students.get(studentID);
 		stu.setBackground(Color.GREEN);
+		pack();
 	}
 	
 	public void isAbsent(String studentID)

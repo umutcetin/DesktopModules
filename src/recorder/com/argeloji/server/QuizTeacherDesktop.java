@@ -40,6 +40,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import org.jfree.ui.RefineryUtilities;
+
 import com.argeloji.cons.Enums.AnswerType;
 import com.argeloji.cons.Enums.MessageType;
 import com.argeloji.entity.Question;
@@ -143,7 +145,12 @@ public class QuizTeacherDesktop extends JFrame implements ActionListener {
 			ServerDispatcher sd= ServerDispatcher.getInstance();
 			sd.send(MessageType.SendQuestion, q1);
 			
-
+			BarChartDemo4 demo = new BarChartDemo4("Cevap Daðýlýmý");
+	        demo.pack();
+	        RefineryUtilities.centerFrameOnScreen(demo);
+	        demo.setVisible(true);
+			
+			
 			// QuizClientDesktop qc = new QuizClientDesktop(
 			// Integer.parseInt(cbSaat.getSelectedItem().toString()),
 			// Integer.parseInt(cbDakika.getSelectedItem().toString()),

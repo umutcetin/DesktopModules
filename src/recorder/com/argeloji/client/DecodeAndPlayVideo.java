@@ -54,16 +54,23 @@ public class DecodeAndPlayVideo
     // create a new reader
 
     IMediaReader reader = ToolFactory.makeReader(filePath);
-
+    
     //
     // Create a MediaViewer object and tell it to play video only
     //
     reader.addListener(ToolFactory.makeViewer(IMediaViewer.Mode.AUDIO_VIDEO));
 
     // read out the contents of the media file, and sit back and watch
-
+    while(1==1)
+    {
     while (reader.readPacket() == null)
       do {} while(false);
-
+    }
+    //reader.close();
   }
+  public static void main()
+  {
+	  DecodeAndPlayVideo dc= new DecodeAndPlayVideo("1336827370291.mp4");
+  }
+  
 }

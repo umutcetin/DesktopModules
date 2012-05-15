@@ -5,11 +5,17 @@ import java.util.Calendar;
 
 import com.argeloji.cons.Enums;
 import com.argeloji.messaging.MessengerServer;
+import com.argeloji.server.AttendanceFrame;
+import com.argeloji.server.BarChartDemo4;
 import com.argeloji.server.SwingExample;
 
 public class ServerDispatcher {
 
 	MessengerServer ms;
+	
+	AttendanceFrame af;
+	
+	BarChartDemo4 bc;
 	
 	private static ServerDispatcher theInstance;
 	// Ýhtiyaç anýnda yaratýlacak nesne
@@ -38,7 +44,8 @@ public class ServerDispatcher {
 
 	public void messageReceived_StudentConnected(Student student)
 	{
-		student.printID();
+		student.printID();	
+		af.isHere(student.getStudentID());		
 	}
 	
 	public void messageReceived_SendQuestion(Question question)
@@ -54,13 +61,16 @@ public class ServerDispatcher {
 	public void messageReceived_SendAnswer(Answer answer)
 	{
 		answer.print();
+		String secenek=answer.getAnswer().get(0).toString();
+		System.out.println(secenek);
+		bc.updateGraphics(secenek);
 		
-		try {
-			SwingExample se= new SwingExample();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			SwingExample se= new SwingExample();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 	
 	public void studentAlreadyConnected(Student student)
@@ -71,5 +81,15 @@ public class ServerDispatcher {
 	public void messageReceived_SendFile(FileContainer fileContainer)
 	{
 		fileContainer.print();
+	}
+	
+	public void register(AttendanceFrame af)
+	{
+		this.af= af;
+	}
+	
+	public void registerGraphics(BarChartDemo4 bc)
+	{
+		this.bc = bc;
 	}
 }

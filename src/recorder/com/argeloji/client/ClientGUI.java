@@ -20,7 +20,7 @@ public class ClientGUI extends JFrame {
 
 		// test icin
 		Random r = new Random();
-		int sID = r.nextInt(100);
+		int sID = r.nextInt(20);
 		// test icin bitti
 		ClientDispatcher cd= ClientDispatcher.getInstance(new Student(Integer.toString(sID)));
 

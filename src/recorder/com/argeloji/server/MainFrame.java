@@ -130,8 +130,8 @@ public class MainFrame extends JFrame implements ActionListener {
 		try {
 			MainFrame frame = new MainFrame("demo");
 			frame.setVisible(true);
-			ClientGUI cg= new ClientGUI();
-			cg.setVisible(true);
+//			ClientGUI cg= new ClientGUI();
+//			cg.setVisible(true);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
